@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Dl93fzFueVi7SNDPeSz8E4Ap9ng6Y27z5teI4qy6D3VKSeDu/pULC2eC5LhVosS9PvDEhOLZmsKUIuYTDpl8WQ==",
+  "dgSpecHash": "T4HUnuhhmBxZIbzlask7Q8GhcAjLPl1tSOUCGcRjwbU6oDLqb/IxC4fndz4G1dHuCEti77wnMYi6s4n8aof8Eg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\Documents\\e-book\\bookstore\\bookstore.csproj",
+  "projectFilePath": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\E-Booking\\bookstore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

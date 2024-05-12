@@ -4111,11 +4111,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\Documents\\e-book\\bookstore\\bookstore.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\E-Booking\\bookstore.csproj",
       "projectName": "bookstore",
-      "projectPath": "C:\\Users\\user\\Documents\\e-book\\bookstore\\bookstore.csproj",
+      "projectPath": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\E-Booking\\bookstore.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\Documents\\e-book\\bookstore\\obj\\",
+      "outputPath": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\E-Booking\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
