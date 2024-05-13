@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using bookstore.Models;
+using bookstore.Models.ViewModels;
 
 namespace bookstore.Controllers
 {
@@ -65,8 +66,67 @@ namespace bookstore.Controllers
             }
         }
 
+        [HttpGet]
+public IActionResult AdminSignup()
+{
+    return View();
+}
+
+[HttpPost]
+public async Task<IActionResult> AdminSignup(AdminSignupViewModel model)
+{
+    if (ModelState.IsValid)
+    {
+        // Create a new ApplicationUser for the admin
+        var adminUser = new ApplicationUser
+        {
+            Username = model.Username,
+            Email = model.Email,
+            Password = model.Password,
+            FullName = "Admin",
+            IsActive = true
+        };
+
+        // Add admin user to the Users DbSet
+        _context.Users.Add(adminUser);
+
+        // Save changes to the database
+        await _context.SaveChangesAsync();
+
+        // Return a JSON response indicating successful signup
+        return Json(new { success = true, message = "Signup successful" });
+    }
+
+    // If ModelState is not valid, return a JSON response with validation errors
+    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+    return Json(new { success = false, message = "Validation failed", errors = errors });
+}
 
 
+[HttpGet]
+public IActionResult AdminLogin()
+{
+    return View();
+}
+
+[HttpPost]
+public IActionResult AdminLogin(LoginViewModel model)
+{
+    // Your login logic here
+    // For demonstration purposes, assume login is successful
+
+    // Simulate successful login
+    var isAdminLoginSuccessful = true;
+
+    if (isAdminLoginSuccessful)
+    {
+        return Json(new { success = true, message = "Login successful" });
+    }
+    else
+    {
+        return Json(new { success = false, message = "Invalid username or password" });
+    }
+}
 
 
 
