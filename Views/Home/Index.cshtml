@@ -34,8 +34,7 @@
                     success: function (response) {
                         if (response.success) {
                             $('#loginMessage').text(response.message).removeClass('text-danger').addClass('text-success');
-                            // Optionally, redirect to admin dashboard or homepage after successful login
-                            // window.location.href = '/Admin/Dashboard'; // Change the URL as per your application
+                            window.location.href = '/Admin/AdminPanel'; // Redirect to admin panel view
                         } else {
                             $('#loginMessage').text(response.message).removeClass('text-success').addClass('text-danger');
                         }
@@ -48,3 +47,4 @@
         });
     </script>
 }
+

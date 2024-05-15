@@ -121,6 +121,8 @@ public IActionResult AdminLogin(LoginViewModel model)
     if (isAdminLoginSuccessful)
     {
         return Json(new { success = true, message = "Login successful" });
+         return View("~/Views/Admin/AdminPanel.cshtml");
+        return RedirectToAction("AdminPanel", "Admin");
     }
     else
     {

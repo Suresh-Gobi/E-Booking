@@ -1,0 +1,60 @@
+@model bookstore.Models.ViewModels.AdminSignupViewModel
+
+<h1>Admin Signup</h1>
+
+<div id="signupMessage"></div>
+
+<form id="adminSignupForm" method="post">
+    <div>
+        <label asp-for="Username">Username</label>
+        <input asp-for="Username" />
+        <span asp-validation-for="Username"></span>
+    </div>
+
+    <div>
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <label asp-for="ConfirmPassword">Confirm Password</label>
+        <input asp-for="ConfirmPassword" type="password" />
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+    
+    <button type="submit">Signup</button>
+</form>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#adminSignupForm').submit(function (e) {
+                e.preventDefault(); // Prevent the default form submission
+                
+                $.ajax({
+                    url: '@Url.Action("AdminSignup", "Account")', // URL to submit the form data
+                    type: 'POST',
+                    data: $('#adminSignupForm').serialize(), // Serialize form data
+                    success: function (response) {
+                        if (response.success) {
+                            $('#signupMessage').text(response.message).removeClass('text-danger').addClass('text-success');
+                            // Optionally, reset the form fields after successful signup
+                            // $('#adminSignupForm')[0].reset();
+                        } else {
+                            $('#signupMessage').text(response.message).removeClass('text-success').addClass('text-danger');
+                        }
+                    },
+                    error: function () {
+                        $('#signupMessage').text('An error occurred. Please try again.').removeClass('text-success').addClass('text-danger');
+                    }
+                });
+            });
+        });
+    </script>
+}
