@@ -1,137 +1,92 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using ebookings.Models;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using bookstore.Models;
-using bookstore.Models.ViewModels;
 
-namespace bookstore.Controllers
+namespace ebookings.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ApplicationDbContext _context;
 
-        public AccountController(ApplicationDbContext context)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
         }
 
+        [HttpGet]
+        public IActionResult Signup()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Signup(ApplicationUser user)
+        public async Task<IActionResult> Signup(UserSignupModel model)
         {
             if (ModelState.IsValid)
             {
-                // Add the user to the Users DbSet
-                _context.Users.Add(user);
+                var user = new IdentityUser { UserName = model.Username, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
 
-                // Save changes to the database
-                await _context.SaveChangesAsync();
-
-                // Redirect to home page after successful signup
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                // Log ModelState errors for debugging
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                if (result.Succeeded)
                 {
-                    Console.WriteLine(error.ErrorMessage);
+                    _context.UserSignupModels.Add(model);
+                    await _context.SaveChangesAsync(); // Save changes to the database
+
+                    return RedirectToAction("Index", "Home");
                 }
-
-                // If ModelState is not valid, return the signup view with validation errors
-                return View(user);
-            }
-        }
-
-         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState); // Return detailed bad request response with validation errors
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
             }
 
-            // Check if the username and password match in the database
-            var authenticatedUser = await _context.Users.FirstOrDefaultAsync(u =>
-                u.Username == model.Username && u.Password == model.Password);
-
-            if (authenticatedUser != null)
-            {
-                return Ok("Login successful"); // Return an OK response with login success message
-            }
-            else
-            {
-                return NotFound("Invalid username or password"); // Return a not found response for failed login
-            }
+            return View(model);
         }
 
         [HttpGet]
-public IActionResult AdminSignup()
-{
-    return View();
-}
-
-[HttpPost]
-public async Task<IActionResult> AdminSignup(AdminSignupViewModel model)
-{
-    if (ModelState.IsValid)
-    {
-        // Create a new ApplicationUser for the admin
-        var adminUser = new ApplicationUser
+        public IActionResult Login()
         {
-            Username = model.Username,
-            Email = model.Email,
-            Password = model.Password,
-            FullName = "Admin",
-            IsActive = true
-        };
+            return View();
+        }
 
-        // Add admin user to the Users DbSet
-        _context.Users.Add(adminUser);
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        {
+            if (ModelState.IsValid)
+            {
+                var userSignup = await _context.UserSignupModels.FirstOrDefaultAsync(u => u.Email == model.Email);
+                if (userSignup != null && userSignup.Password == model.Password)
+                {
+                    // You can perform additional checks here if needed
+                    // For example, checking if the user account is active or verified
 
-        // Save changes to the database
-        await _context.SaveChangesAsync();
+                    // Successful login, you may implement your own logic here
+                    return RedirectToAction("Index", "Dashboard"); // Redirect to dashboard on successful login
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt");
+                    return View(model);
+                }
+            }
 
-        // Return a JSON response indicating successful signup
-        return Json(new { success = true, message = "Signup successful" });
-    }
+            return View(model);
+        }
 
-    // If ModelState is not valid, return a JSON response with validation errors
-    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-    return Json(new { success = false, message = "Validation failed", errors = errors });
-}
-
-
-[HttpGet]
-public IActionResult AdminLogin()
-{
-    return View();
-}
-
-[HttpPost]
-public IActionResult AdminLogin(LoginViewModel model)
-{
-    // Your login logic here
-    // For demonstration purposes, assume login is successful
-
-    // Simulate successful login
-    var isAdminLoginSuccessful = true;
-
-    if (isAdminLoginSuccessful)
-    {
-        return Json(new { success = true, message = "Login successful" });
-         return View("~/Views/Admin/AdminPanel.cshtml");
-        return RedirectToAction("AdminPanel", "Admin");
-    }
-    else
-    {
-        return Json(new { success = false, message = "Invalid username or password" });
-    }
-}
-
-
-
-
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home"); // Redirect to home page after logout
+        }
     }
 }

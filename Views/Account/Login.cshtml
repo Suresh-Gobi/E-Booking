@@ -1,25 +1,26 @@
-@using bookstore.Models
-@model ApplicationUser
+@model ebookings.Models.LoginViewModel
 
 <h2>Login</h2>
 
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-danger">
-        <strong>Error:</strong> Invalid username or password.
-    </div>
-}
-
-<form asp-action="Login" method="post">
+<form asp-controller="Account" asp-action="Login" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label for="Username">Username:</label>
-        <input type="text" asp-for="Username" class="form-control" id="Username" placeholder="Enter your username" required>
-        <span asp-validation-for="Username" class="text-danger"></span>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="Password">Password:</label>
-        <input type="password" asp-for="Password" class="form-control" id="Password" placeholder="Enter your password" required>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label asp-for="RememberMe">
+                <input asp-for="RememberMe" />
+                Remember me
+            </label>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
