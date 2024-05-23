@@ -70,7 +70,7 @@ namespace ebookings.Controllers
                     // For example, checking if the user account is active or verified
 
                     // Successful login, you may implement your own logic here
-                    return RedirectToAction("Index", "Dashboard"); // Redirect to dashboard on successful login
+                    return RedirectToAction("Dashboard", "Account"); // Redirect to dashboard on successful login
                 }
                 else
                 {
@@ -81,6 +81,7 @@ namespace ebookings.Controllers
 
             return View(model);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Logout()

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\ebookings\\ebookings\\ebookings.csproj": {}
+    "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\E-Booking\\ebookings.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\ebookings\\ebookings\\ebookings.csproj": {
+    "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\E-Booking\\ebookings.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\ebookings\\ebookings\\ebookings.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\E-Booking\\ebookings.csproj",
         "projectName": "ebookings",
-        "projectPath": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\ebookings\\ebookings\\ebookings.csproj",
+        "projectPath": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\E-Booking\\ebookings.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\ebookings\\ebookings\\obj\\",
+        "outputPath": "C:\\Users\\user\\Documents\\TOP-UP\\AD-Coursework-02\\E-Booking\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",

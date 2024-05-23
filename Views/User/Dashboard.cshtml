@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "User Dashboard";
+}
+
+<h1>Welcome to Your Dashboard, @User.Identity.Name!</h1>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active">Dashboard</a>
+            <a href="@Url.Action("MyOrders", "User")" class="list-group-item list-group-item-action">My Orders</a>
+            <a href="@Url.Action("Cart", "User")" class="list-group-item list-group-item-action">Cart</a>
+            <a href="@Url.Action("Profile", "User")" class="list-group-item list-group-item-action">Profile</a>
+            <!-- Add more navigation links as needed -->
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <!-- Dashboard content goes here -->
+                <h3 class="card-title">Dashboard Overview</h3>
+                <p class="card-text">Welcome to your user dashboard, @User.Identity.Name. Here, you can manage your orders, view your cart, and update your profile.</p>
+            </div>
+        </div>
+    </div>
+</div>

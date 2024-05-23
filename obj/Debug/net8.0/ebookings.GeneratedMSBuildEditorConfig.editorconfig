@@ -9,67 +9,71 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ebookings
 build_property.RootNamespace = ebookings
-build_property.ProjectDir = C:\Users\user\Documents\TOP-UP\AD-Coursework-02\ebookings\ebookings\
+build_property.ProjectDir = C:\Users\user\Documents\TOP-UP\AD-Coursework-02\E-Booking\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\user\Documents\TOP-UP\AD-Coursework-02\ebookings\ebookings
+build_property.MSBuildProjectDirectory = C:\Users\user\Documents\TOP-UP\AD-Coursework-02\E-Booking
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Account/Login.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Account/Signup.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Account/Signup.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTaWdudXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Admin/AdminLogin.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Admin/AdminLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Admin/AdminSignup.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Admin/AdminSignup.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5TaWdudXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Books/Create.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Books/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Books/Edit.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Books/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Books/Get.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Books/Get.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcR2V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Home/Index.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Home/Privacy.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Shared/Error.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/_ViewImports.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/User/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/_ViewStart.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/ebookings/ebookings/Views/Shared/_Layout.cshtml]
+[C:/Users/user/Documents/TOP-UP/AD-Coursework-02/E-Booking/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-3q5431svf3
