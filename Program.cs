@@ -88,10 +88,11 @@ app.MapControllerRoute(
     defaults: new { controller = "Books", action = "Delete" });
 
 app.MapControllerRoute(
-    name: "UserDashboard",
-    pattern: "User/Dashboard", // Define the route pattern
-    defaults: new { controller = "Account", action = "Dashboard" } // Specify the controller and action
+    name: "user-dashboard",
+    pattern: "User/Dashboard",
+    defaults: new { controller = "User", action = "Dashboard" }
 );
+
 
 // Start the application
 app.Run();
