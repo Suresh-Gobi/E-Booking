@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using ebookings.Models;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ebookings.Controllers
 {
@@ -58,27 +59,31 @@ namespace ebookings.Controllers
             return View();
         }
 
-        [HttpPost]
+         [HttpPost]
+        [AllowAnonymous] // Allow anonymous access to this action
+        [ValidateAntiForgeryToken] // Add anti-forgery token for security
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
-                var userSignup = await _context.UserSignupModels.FirstOrDefaultAsync(u => u.Email == model.Email);
-                if (userSignup != null && userSignup.Password == model.Password)
+                // Find the user using their email
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
                 {
-                    // You can perform additional checks here if needed
-                    // For example, checking if the user account is active or verified
+                    // Sign in the user using SignInManager
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        // Redirect to dashboard on successful login
+                        return RedirectToAction("Dashboard", "User");
+                    }
+                }
 
-                    // Successful login, you may implement your own logic here
-                    return RedirectToAction("Dashboard", "Account"); // Redirect to dashboard on successful login
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt");
-                    return View(model);
-                }
+                // If login fails, add an error to ModelState
+                ModelState.AddModelError(string.Empty, "Invalid login attempt");
             }
 
+            // Return the view with the model (and any validation errors)
             return View(model);
         }
 
