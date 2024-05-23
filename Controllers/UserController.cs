@@ -2,41 +2,43 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using ebookings.Models;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization; // Add this namespace
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace ebookings.Controllers
 {
     public class UserController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public UserController(UserManager<IdentityUser> userManager)
+        public UserController(UserManager<IdentityUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
         // GET: /User/Dashboard
-        [Authorize] // Add this attribute to require authentication
+        [Authorize]
         public async Task<IActionResult> Dashboard()
         {
-            // Get the logged-in user using ASP.NET Core Identity UserManager
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                // Redirect to login if user is not authenticated
                 return RedirectToAction("Login", "Account");
             }
 
-            // Create a view model and pass the user details to the view
+            var books = await _context.Books.ToListAsync(); // Get all books from the database
+            
             var viewModel = new UserDashboardViewModel
             {
                 Username = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                Books = books // Assign books to the view model
             };
 
-            return View(viewModel); // Renders the Dashboard.cshtml view with user details
+            return View(viewModel);
         }
-
-        // Other actions like Profile, Orders, etc.
     }
 }
