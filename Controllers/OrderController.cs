@@ -1,4 +1,7 @@
+// OrderController.cs
 using ebookings.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -6,13 +9,16 @@ using System.Threading.Tasks;
 
 namespace ebookings.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public OrderController(ApplicationDbContext context)
+        public OrderController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Order/Checkout
@@ -29,6 +35,15 @@ namespace ebookings.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = _userManager.GetUserId(User);
+                var cartItems = await _context.CartItems.Include(c => c.Book).Where(c => c.UserId == userId).ToListAsync();
+
+                if (!cartItems.Any())
+                {
+                    ModelState.AddModelError("", "Your cart is empty.");
+                    return View("Checkout", model);
+                }
+
                 var order = new Order
                 {
                     FullName = model.FullName,
@@ -36,18 +51,20 @@ namespace ebookings.Controllers
                     PostalCode = model.PostalCode,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
-                    Items = await _context.CartItems.Include(c => c.Book).ToListAsync() // Assuming all cart items are part of the order
+                    UserId = userId,
+                    Items = cartItems
                 };
 
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
 
                 // Clear the cart after successful order
-                _context.CartItems.RemoveRange(order.Items);
+                _context.CartItems.RemoveRange(cartItems);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("OrderConfirmation");
             }
+
             return View("Checkout", model);
         }
 
