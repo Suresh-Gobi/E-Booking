@@ -12,6 +12,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<UserSignupModel> UserSignupModels { get; set; }
     public DbSet<AdminSignupModel> AdminSignupModel { get; set; }
     public DbSet<Book> Books { get; set; }
+   public DbSet<CartItem> CartItems { get; set; }
 
     // Other DbSet properties as needed
 }

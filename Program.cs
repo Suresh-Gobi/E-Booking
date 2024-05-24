@@ -93,6 +93,11 @@ app.MapControllerRoute(
     defaults: new { controller = "User", action = "Dashboard" }
 );
 
+app.MapControllerRoute(
+    name: "cart",
+    pattern: "Cart/Index",
+    defaults: new { controller = "Cart", action = "Index" }
+);
 
 // Start the application
 app.Run();

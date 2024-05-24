@@ -7,24 +7,36 @@
 <h1>Welcome to Your Dashboard, @Model.Username!</h1>
 
 <div class="row">
-    @foreach (var book in Model.Books)
-    {
-        <div class="col-md-6">
-            <div class="card">
+    <div class="col-md-6">
+        <div class="card">
             <div class="card-body">
                 <h3 class="card-title">User Details</h3>
                 <p><strong>Username:</strong> @Model.Username</p>
                 <p><strong>Email:</strong> @Model.Email</p>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var book in Model.Books)
+    {
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">@book.Title</h3>
                     <p><strong>Author:</strong> @book.Author</p>
                     <p><strong>Publisher:</strong> @book.Publisher</p>
                     <!-- Add other book details as needed -->
+
+                    <!-- Add to Cart button -->
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="id" value="@book.Id" />
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    </form>
                 </div>
             </div>
         </div>
     }
+}
 </div>

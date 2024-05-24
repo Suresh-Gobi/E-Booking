@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ebookings.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240522172717_InitialCreate")]
+    [Migration("20240523140747_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -293,6 +293,30 @@ namespace ebookings.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("ebookings.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("ebookings.Models.UserSignupModel", b =>
                 {
                     b.Property<int>("Id")
@@ -367,6 +391,17 @@ namespace ebookings.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ebookings.Models.CartItem", b =>
+                {
+                    b.HasOne("ebookings.Models.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
                 });
 #pragma warning restore 612, 618
         }
