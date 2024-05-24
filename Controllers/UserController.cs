@@ -22,24 +22,24 @@ namespace ebookings.Controllers
         // GET: /User/Dashboard
         [Authorize]
         public async Task<IActionResult> Dashboard()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                var user = await _userManager.GetUserAsync(User);
-                if (user == null)
-                {
-                    return RedirectToAction("Login", "Account");
-                }
-
-                var books = await _context.Books.ToListAsync();
-                
-                var viewModel = new UserDashboardViewModel
-                {
-                    Username = user.UserName,
-                    Email = user.Email,
-                    Books = books,
-                    Cart = new Cart() // Initialize the Cart for the user
-                };
-
-                return View(viewModel);
+                return RedirectToAction("Login", "Account");
             }
+
+            var books = await _context.Books.ToListAsync();
+            
+            var viewModel = new UserDashboardViewModel
+            {
+                Username = user.UserName,
+                Email = user.Email,
+                Books = books,
+                Cart = new CartItem() // Initialize the Cart for the user
+            };
+
+            return View(viewModel);
+        }
     }
 }

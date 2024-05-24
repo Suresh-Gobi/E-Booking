@@ -1,6 +1,8 @@
 using ebookings.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,10 +11,12 @@ namespace ebookings.Controllers
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<CartController> _logger;
 
-        public CartController(ApplicationDbContext context)
+        public CartController(ApplicationDbContext context, ILogger<CartController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Cart/Index
@@ -76,6 +80,55 @@ namespace ebookings.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Other actions like UpdateCart, Checkout, etc., can be added as needed
+        // GET: Cart/Order
+        public IActionResult Order()
+        {
+            return View(new Order());
+        }
+
+        // POST: Cart/CompleteOrder
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CompleteOrder(Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                using var transaction = await _context.Database.BeginTransactionAsync();
+
+                try
+                {
+                    order.OrderDate = DateTime.Now;
+                    _context.Orders.Add(order);
+                    await _context.SaveChangesAsync();
+
+                    var cartItems = await _context.CartItems.Include(c => c.Book).ToListAsync();
+                    foreach (var item in cartItems)
+                    {
+                        var orderDetail = new OrderDetail
+                        {
+                            OrderId = order.Id,
+                            BookId = item.BookId,
+                            Quantity = item.Quantity,
+                            Price = item.Price
+                        };
+                        _context.OrderDetails.Add(orderDetail);
+                        _context.CartItems.Remove(item); // Clear the cart
+                    }
+
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                    
+                    TempData["SuccessMessage"] = "Order placed successfully!";
+                    return RedirectToAction("Index", "Books"); // Redirect to a suitable page
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    _logger.LogError(ex, "Error completing order.");
+                    ModelState.AddModelError("", "There was an error processing your order. Please try again.");
+                }
+            }
+            return View("Order", order);
+        }
     }
 }
