@@ -1,0 +1,17 @@
+@model ebookings.Models.ReviewViewModel
+
+@{
+    ViewData["Title"] = "Review Book";
+}
+
+<h1>Review Book</h1>
+
+<form asp-action="SubmitReview" method="post">
+    <div class="form-group">
+        <label asp-for="Review"></label>
+        <textarea asp-for="Review" class="form-control"></textarea>
+        <span asp-validation-for="Review" class="text-danger"></span>
+    </div>
+    <input type="hidden" asp-for="CartItemId" />
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+</form>
