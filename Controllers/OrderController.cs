@@ -73,5 +73,15 @@ namespace ebookings.Controllers
         {
             return View();
         }
+
+        // GET: Order/MyOrders
+        public async Task<IActionResult> MyOrders()
+        {
+            var userId = _userManager.GetUserId(User);
+            var orders = await _context.Orders.Include(o => o.Items).ThenInclude(i => i.Book)
+                                              .Where(o => o.UserId == userId)
+                                              .ToListAsync();
+            return View(orders);
+        }
     }
 }
