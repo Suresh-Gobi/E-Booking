@@ -111,6 +111,12 @@ app.MapControllerRoute(
     defaults: new { controller = "User", action = "Edit" }
 );
 
+app.MapControllerRoute(
+    name: "all-orders",
+    pattern: "Order/All",
+    defaults: new { controller = "Order", action = "AllDetails" }
+);
+
 
 // Start the application
 app.Run();

@@ -139,5 +139,17 @@ public async Task<IActionResult> CompleteOrder(OrderViewModel model)
 
             return View("Review", model);
         }
+
+        // GET: Order/AllDetails
+        public async Task<IActionResult> AllDetails()
+        {
+            var orders = await _context.Orders
+                .Include(o => o.Items)
+                .ThenInclude(i => i.Book)
+                .ToListAsync();
+            
+            return View(orders);
+        }
+
     }
 }
