@@ -41,5 +41,12 @@ namespace ebookings.Controllers
 
             return View(viewModel);
         }
+
+        // GET: /User/All
+        public async Task<IActionResult> All()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return View("Views/Admin/All.cshtml", users);
+        }
     }
 }

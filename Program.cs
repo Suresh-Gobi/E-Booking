@@ -99,5 +99,11 @@ app.MapControllerRoute(
     defaults: new { controller = "Cart", action = "Index" }
 );
 
+app.MapControllerRoute(
+    name: "all-users",
+    pattern: "User/All",
+    defaults: new { controller = "User", action = "All" }
+);
+
 // Start the application
 app.Run();
