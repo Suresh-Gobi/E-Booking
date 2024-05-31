@@ -100,7 +100,29 @@ namespace ebookings.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                // Optionally, redirect to a different page or action after deletion
+                return RedirectToAction("All");
+            }
+            else
+            {
+                // Handle delete errors
+                ModelState.AddModelError("", "Failed to delete user.");
+                return View("All", await _userManager.Users.ToListAsync());
+            }
+        }
 
     }
 }
