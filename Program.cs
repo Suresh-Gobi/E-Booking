@@ -105,5 +105,12 @@ app.MapControllerRoute(
     defaults: new { controller = "User", action = "All" }
 );
 
+app.MapControllerRoute(
+    name: "edit-user",
+    pattern: "User/Edit/{id}",
+    defaults: new { controller = "User", action = "Edit" }
+);
+
+
 // Start the application
 app.Run();

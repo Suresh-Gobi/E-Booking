@@ -48,5 +48,59 @@ namespace ebookings.Controllers
             var users = await _userManager.Users.ToListAsync();
             return View("Views/Admin/All.cshtml", users);
         }
+
+        // GET: /User/Edit/{id}
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View("Views/Admin/EditUser.cshtml", user);
+        }
+
+
+        // POST: /User/Edit/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(IdentityUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(model.Id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("All");
+                }
+                else
+                {
+                    // Handle update errors
+                    ModelState.AddModelError("", "Failed to update user.");
+                    return View(model);
+                }
+            }
+
+            // If ModelState is not valid, return the view with validation errors
+            return View(model);
+        }
+
+
+
     }
 }
