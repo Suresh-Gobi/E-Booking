@@ -117,6 +117,11 @@ app.MapControllerRoute(
     defaults: new { controller = "Order", action = "AllDetails" }
 );
 
+app.MapControllerRoute(
+    name: "allBooks",
+    pattern: "Books/AllBooks",
+    defaults: new { controller = "Books", action = "AllBooks" }
+);
 
 // Start the application
 app.Run();

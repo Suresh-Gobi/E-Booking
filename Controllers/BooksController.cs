@@ -15,6 +15,23 @@ namespace ebookings.Controllers
             _context = context;
         }
 
+        // GET: Books/Index
+        public async Task<IActionResult> Index()
+        {
+            var books = await _context.Books.ToListAsync();
+            return View(books);
+        }
+
+        // GET: Books/AllBooks
+        public async Task<IActionResult> AllBooks()
+        {
+            var books = await _context.Books.ToListAsync();
+            return View("Books", books);
+        }
+
+
+
+
         // GET: Books/Get
         public async Task<IActionResult> Get()
         {

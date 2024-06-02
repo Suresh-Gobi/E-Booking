@@ -23,8 +23,11 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="AllBooks">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Account" asp-action="Signup">Signup</a>
@@ -56,7 +59,6 @@
     <a class="nav-link" asp-controller="Order" asp-action="AllDetails">All Order details</a>
 </li>
 
-<li><a asp-controller="Order" asp-action="MyOrders">My Orders</a></li>
 
 
 
