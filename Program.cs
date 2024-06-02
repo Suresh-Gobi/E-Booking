@@ -123,5 +123,15 @@ app.MapControllerRoute(
     defaults: new { controller = "Books", action = "AllBooks" }
 );
 
+
+app.MapControllerRoute(
+    name: "adminboard",
+    pattern: "Admin/Adminboard",
+    defaults: new { controller = "Adminboard", action = "AdminDashboard" }
+);
+
+
+
+
 // Start the application
 app.Run();
