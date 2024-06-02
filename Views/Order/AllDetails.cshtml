@@ -1,44 +1,59 @@
 @model IEnumerable<ebookings.Models.Order>
 
-   @{
-       ViewData["Title"] = "All Orders";
-   }
+@{
+    ViewData["Title"] = "All Orders";
+    var orderStatusValues = Enum.GetValues(typeof(OrderStatus)).Cast<OrderStatus>();
+}
 
-   <h2>All Orders</h2>
+<h2>All Orders</h2>
 
-   <table class="table table-striped">
-       <thead>
-           <tr>
-               <th>Order ID</th>
-               <th>User ID</th>
-               <th>Full Name</th>
-               <th>Address</th>
-               <th>Email</th>
-               <th>Phone Number</th>
-               <th>Status</th>
-               <th>Items</th>
-           </tr>
-       </thead>
-       <tbody>
-           @foreach (var order in Model)
-           {
-               <tr>
-                   <td>@order.Id</td>
-                   <td>@order.UserId</td>
-                   <td>@order.FullName</td>
-                   <td>@order.Address</td>
-                   <td>@order.Email</td>
-                   <td>@order.PhoneNumber</td>
-                   <td>@order.Status</td>
-                   <td>
-                       <ul>
-                           @foreach (var item in order.Items)
-                           {
-                               <li>@item.Book.Title</li>
-                           }
-                       </ul>
-                   </td>
-               </tr>
-           }
-       </tbody>
-   </table>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>User ID</th>
+            <th>Full Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Status</th>
+            <th>Items</th>
+            <th>Update Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.UserId</td>
+                <td>@order.FullName</td>
+                <td>@order.Address</td>
+                <td>@order.Email</td>
+                <td>@order.PhoneNumber</td>
+                <td>@order.Status</td>
+                <td>
+                    <ul>
+                        @foreach (var item in order.Items)
+                        {
+                            <li>@item.Book.Title</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <form asp-action="UpdateStatus" method="post">
+                        <input type="hidden" name="id" value="@order.Id" />
+                        <select name="status" class="form-control">
+                            @foreach (var status in orderStatusValues)
+                            {
+                                <option value="@status.ToString()" selected="@((order.Status == status) ? "selected" : null)">@status</option>
+
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary mt-2">Update Status</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

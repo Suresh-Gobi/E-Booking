@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace ebookings.Models
@@ -15,6 +17,18 @@ namespace ebookings.Models
         public IdentityUser User { get; set; }
         public List<CartItem> Items { get; set; }
         public OrderStatus Status { get; set; } = OrderStatus.PendingDelivery;
+
+        internal void UpdateStatus(string status)
+        {
+            if (Enum.TryParse(status, out OrderStatus newStatus))
+            {
+                Status = newStatus;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid status value.", nameof(status));
+            }
+        }
     }
 
     public enum OrderStatus

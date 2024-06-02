@@ -151,5 +151,30 @@ public async Task<IActionResult> CompleteOrder(OrderViewModel model)
             return View(orders);
         }
 
+       // POST: Order/UpdateStatus
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateStatus(int id, string status)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            // Update status using the new method in the Order model
+            order.UpdateStatus(status);
+
+            _context.Update(order);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(AllDetails));
+        }
+
+
+
+        
+
+
     }
 }
