@@ -11,9 +11,9 @@
 <div class="d-flex justify-content-between">
     <!-- Search Bar -->
     <form asp-controller="Books" asp-action="Search" method="get" class="mb-3">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search by Title" name="searchString">
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search by Title" id="searchInput">
+            <button class="btn btn-outline-secondary" type="button" onclick="searchBooks()">Search</button>
         </div>
     </form>
 
@@ -28,8 +28,8 @@
 <div class="row">
     <div class="col-md-6">
 
-                <p><strong>Username:</strong> @Model.Username</p>
-                <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Username:</strong> @Model.Username</p>
+        <p><strong>Email:</strong> @Model.Email</p>
 
     </div>
 </div>
@@ -38,10 +38,10 @@
 <h4>Latest Books</h4>
 <hr/>
 <br/>
-<div class="row">
+<div class="row" id="bookList">
     @foreach (var book in Model.Books)
     {
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6 mb-4 book-card" data-title="@book.Title">
             <div class="card">
                 <div class="card-body d-flex justify-content-between align-items-start flex-wrap">
                     <div>
@@ -93,6 +93,23 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function searchBooks() {
+            var input, filter, cards, card, title, i;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            cards = document.querySelectorAll(".book-card");
+            for (i = 0; i < cards.length; i++) {
+                card = cards[i];
+                title = card.getAttribute("data-title").toUpperCase();
+                if (title.includes(filter)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            }
+        }
+    </script>
     <script>
         $(document).ready(function () {
             $('.view-details-btn').click(function () {

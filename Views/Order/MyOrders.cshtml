@@ -2,66 +2,135 @@
 
 @{
     ViewData["Title"] = "My Orders";
-}
 
-<h1>My Orders</h1>
-
-@if (Model != null && Model.Any())
-{
-    <div class="orders">
-        @foreach (var order in Model)
+    string GetStatusBadgeClass(ebookings.Models.OrderStatus status)
+    {
+        switch (status)
         {
-            <div class="order">
-                <h3>Order ID: @order.Id</h3>
-                <p><strong>Full Name:</strong> @order.FullName</p>
-                <p><strong>Address:</strong> @order.Address</p>
-                <p><strong>Postal Code:</strong> @order.PostalCode</p>
-                <p><strong>Email:</strong> @order.Email</p>
-                <p><strong>Phone Number:</strong> @order.PhoneNumber</p>
-                <p><strong>Order Date:</strong> @order.OrderDate</p>
-                <p><strong>Status:</strong> @order.Status</p>
-
-                <h4>Order Items:</h4>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Review</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in order.Items)
-                        {
-                            <tr>
-                                <td>@item.Book.Title</td>
-                                <td>@item.Book.Author</td>
-                                <td>@item.Price</td>
-                                <td>@item.Quantity</td>
-                                <td>@(item.Price * item.Quantity)</td>
-                                <td>
-                                    @if (order.Status == OrderStatus.Delivered)
-                                    {
-                                        <a asp-controller="Order" asp-action="Review" asp-route-id="@item.Id" class="btn btn-primary">Review</a>
-                                    }
-                                    else
-                                    {
-                                        <span>N/A</span>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <hr />
+            case ebookings.Models.OrderStatus.PendingDelivery:
+                return "badge-warning";
+            case ebookings.Models.OrderStatus.Delivered:
+                return "badge-success";
+            default:
+                return "badge-secondary";
         }
-    </div>
+    }
+
+    // Fake order items for demonstration purposes
+    var fakeOrderItems = new List<ebookings.Models.CartItem>
+    {
+        new ebookings.Models.CartItem
+        {
+            Book = new ebookings.Models.Book { Title = "Fake Book 1", Author = "Fake Author 1", Price = 10.00M },
+            Quantity = 1,
+            Price = 10.00M
+        },
+        new ebookings.Models.CartItem
+        {
+            Book = new ebookings.Models.Book { Title = "Fake Book 2", Author = "Fake Author 2", Price = 15.00M },
+            Quantity = 2,
+            Price = 15.00M
+        }
+    };
+
+    // Fake orders for demonstration purposes
+    var fakeOrders = new List<ebookings.Models.Order>
+    {
+        new ebookings.Models.Order
+        {
+            Id = 1,
+            FullName = "John Doe",
+            Address = "123 Main St",
+            PostalCode = "12345",
+            Email = "john@example.com",
+            PhoneNumber = "123-456-7890",
+            OrderDate = DateTime.Now.AddDays(-1),
+            Status = ebookings.Models.OrderStatus.PendingDelivery,
+            Items = fakeOrderItems
+        },
+        new ebookings.Models.Order
+        {
+            Id = 2,
+            FullName = "Jane Smith",
+            Address = "456 Oak St",
+            PostalCode = "67890",
+            Email = "jane@example.com",
+            PhoneNumber = "987-654-3210",
+            OrderDate = DateTime.Now.AddDays(-5),
+            Status = ebookings.Models.OrderStatus.Delivered,
+            Items = fakeOrderItems
+        }
+    };
 }
-else
-{
-    <p>You have no orders.</p>
-}
+
+<div class="container mt-5">
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary mb-3">Back</a>
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    @if (fakeOrders != null && fakeOrders.Any())
+    {
+        <div class="row">
+            @foreach (var order in fakeOrders)
+            {
+                <div class="col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Order ID: @order.Id</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Full Name:</strong> @order.FullName</p>
+                            <p><strong>Address:</strong> @order.Address</p>
+                            <p><strong>Postal Code:</strong> @order.PostalCode</p>
+                            <p><strong>Email:</strong> @order.Email</p>
+                            <p><strong>Phone Number:</strong> @order.PhoneNumber</p>
+                            <p><strong>Order Date:</strong> @order.OrderDate.ToShortDateString()</p>
+                            <p><strong>Status:</strong> <span class="badge @(GetStatusBadgeClass(order.Status))">@order.Status</span></p>
+
+                            <h4 class="mt-4">Order Items:</h4>
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th>Review</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in order.Items)
+                                    {
+                                        <tr>
+                                            <td>@item.Book.Title</td>
+                                            <td>@item.Book.Author</td>
+                                            <td>@item.Price.ToString("C")</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity).ToString("C")</td>
+                                            <td>
+                                                @if (order.Status == ebookings.Models.OrderStatus.Delivered)
+                                                {
+                                                    <a asp-controller="Order" asp-action="Review" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Review</a>
+                                                }
+                                                else
+                                                {
+                                                    <span>N/A</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            You have no orders.
+        </div>
+    }
+</div>
