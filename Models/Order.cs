@@ -17,6 +17,7 @@ namespace ebookings.Models
         public IdentityUser User { get; set; }
         public List<CartItem> Items { get; set; }
         public OrderStatus Status { get; set; } = OrderStatus.PendingDelivery;
+        public decimal TotalAmount { get; internal set; }
 
         internal void UpdateStatus(string status)
         {
