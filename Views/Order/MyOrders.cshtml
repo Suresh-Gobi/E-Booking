@@ -15,67 +15,25 @@
                 return "badge-secondary";
         }
     }
-
-    // Fake order items for demonstration purposes
-    var fakeOrderItems = new List<ebookings.Models.CartItem>
-    {
-        new ebookings.Models.CartItem
-        {
-            Book = new ebookings.Models.Book { Title = "Fake Book 1", Author = "Fake Author 1", Price = 10.00M },
-            Quantity = 1,
-            Price = 10.00M
-        },
-        new ebookings.Models.CartItem
-        {
-            Book = new ebookings.Models.Book { Title = "Fake Book 2", Author = "Fake Author 2", Price = 15.00M },
-            Quantity = 2,
-            Price = 15.00M
-        }
-    };
-
-    // Fake orders for demonstration purposes
-    var fakeOrders = new List<ebookings.Models.Order>
-    {
-        new ebookings.Models.Order
-        {
-            Id = 1,
-            FullName = "John Doe",
-            Address = "123 Main St",
-            PostalCode = "12345",
-            Email = "john@example.com",
-            PhoneNumber = "123-456-7890",
-            OrderDate = DateTime.Now.AddDays(-1),
-            Status = ebookings.Models.OrderStatus.PendingDelivery,
-            Items = fakeOrderItems
-        },
-        new ebookings.Models.Order
-        {
-            Id = 2,
-            FullName = "Jane Smith",
-            Address = "456 Oak St",
-            PostalCode = "67890",
-            Email = "jane@example.com",
-            PhoneNumber = "987-654-3210",
-            OrderDate = DateTime.Now.AddDays(-5),
-            Status = ebookings.Models.OrderStatus.Delivered,
-            Items = fakeOrderItems
-        }
-    };
 }
 
 <div class="container mt-5">
-    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary mb-3">Back</a>
+    <a href="/User/Dashboard" class="btn btn-secondary mb-3">Back</a>
     <h1 class="mb-4">@ViewData["Title"]</h1>
 
-    @if (fakeOrders != null && fakeOrders.Any())
+    @if (Model != null && Model.Any())
     {
         <div class="row">
-            @foreach (var order in fakeOrders)
+            @foreach (var order in Model)
             {
                 <div class="col-md-12 mb-4">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h3>Order ID: @order.Id</h3>
+                            <form asp-controller="Order" asp-action="Delete" method="post" class="mb-0">
+                                <input type="hidden" name="id" value="@order.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
                         </div>
                         <div class="card-body">
                             <p><strong>Full Name:</strong> @order.FullName</p>
@@ -110,7 +68,7 @@
                                             <td>
                                                 @if (order.Status == ebookings.Models.OrderStatus.Delivered)
                                                 {
-                                                    <a asp-controller="Order" asp-action="Review" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Review</a>
+                                                    <a asp-controller="Order" asp-action="Review" asp-route-id="@order.Id" class="btn btn-primary btn-sm">Review</a>
                                                 }
                                                 else
                                                 {
@@ -121,6 +79,12 @@
                                     }
                                 </tbody>
                             </table>
+                            <div class="mt-4">
+                                @if (order.Status == ebookings.Models.OrderStatus.Delivered)
+                                {
+                                    <a asp-controller="Order" asp-action="Review" asp-route-id="@order.Id" class="btn btn-primary">Review Order</a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

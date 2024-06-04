@@ -19,6 +19,7 @@
             <th>Status</th>
             <th>Items</th>
             <th>Update Status</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -46,11 +47,16 @@
                         <select name="status" class="form-control">
                             @foreach (var status in orderStatusValues)
                             {
-                                <option value="@status.ToString()" selected="@((order.Status == status) ? "selected" : null)">@status</option>
-
+                                <option value="@status.ToString()" selected="@(order.Status == status ? "selected" : null)">@status</option>
                             }
                         </select>
                         <button type="submit" class="btn btn-primary mt-2">Update Status</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-action="DeleteOrder" method="post" onsubmit="return confirm('Are you sure you want to delete this order?');">
+                        <input type="hidden" name="id" value="@order.Id" />
+                        <button type="submit" class="btn btn-danger mt-2">Delete</button>
                     </form>
                 </td>
             </tr>

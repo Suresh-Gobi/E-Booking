@@ -130,6 +130,12 @@ app.MapControllerRoute(
     defaults: new { controller = "Adminboard", action = "AdminDashboard" }
 );
 
+app.MapControllerRoute(
+    name: "review-order",
+    pattern: "Order/Review", // No placeholder for ID in this route
+    defaults: new { controller = "Order", action = "Review" }
+);
+
 
 
 

@@ -98,47 +98,46 @@ public async Task<IActionResult> CompleteOrder(OrderViewModel model)
             return View(orders);
         }
 
-        // GET: Order/Review/{id}
-        [HttpGet]
-        public async Task<IActionResult> Review(int id)
-        {
-            var cartItem = await _context.CartItems.Include(c => c.Book).FirstOrDefaultAsync(c => c.Id == id);
-            if (cartItem == null)
-            {
-                return NotFound();
-            }
+//         [HttpGet]
+// public async Task<IActionResult> Review(int id)
+// {
+//     var cartItem = await _context.CartItems.Include(c => c.Book).FirstOrDefaultAsync(c => c.Id == id);
+//     if (cartItem == null)
+//     {
+//         return NotFound();
+//     }
 
-            var model = new ReviewViewModel
-            {
-                CartItemId = cartItem.Id,
-                Review = cartItem.Review
-            };
+//     var model = new ReviewViewModel
+//     {
+//         CartItemId = cartItem.Id,
+//         Review = cartItem.Review
+//     };
 
-            return View(model);
-        }
+//     return View(model);
+// }
 
-        // POST: Order/SubmitReview
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitReview(ReviewViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var cartItem = await _context.CartItems.Include(c => c.Book).FirstOrDefaultAsync(c => c.Id == model.CartItemId);
-                if (cartItem == null)
-                {
-                    return NotFound();
-                }
+// // POST: Order/SubmitReview
+// [HttpPost]
+// [ValidateAntiForgeryToken]
+// public async Task<IActionResult> SubmitReview(ReviewViewModel model)
+// {
+//     if (ModelState.IsValid)
+//     {
+//         var cartItem = await _context.CartItems.Include(c => c.Book).FirstOrDefaultAsync(c => c.Id == model.CartItemId);
+//         if (cartItem == null)
+//         {
+//             return NotFound();
+//         }
 
-                cartItem.Review = model.Review;
-                _context.Update(cartItem);
-                await _context.SaveChangesAsync();
+//         cartItem.Review = model.Review;
+//         _context.Update(cartItem);
+//         await _context.SaveChangesAsync();
 
-                return RedirectToAction("MyOrders");
-            }
+//         return RedirectToAction("MyOrders");
+//     }
 
-            return View("Review", model);
-        }
+//     return View("Review", model);
+// }
 
         // GET: Order/AllDetails
         public async Task<IActionResult> AllDetails()
@@ -171,6 +170,50 @@ public async Task<IActionResult> CompleteOrder(OrderViewModel model)
             return RedirectToAction(nameof(AllDetails));
         }
 
+
+[HttpGet]
+public IActionResult Review()
+{
+    // Logic to initialize model or return an empty view
+    return View();
+}
+
+// GET: Order/Delete/5
+[HttpGet]
+public async Task<IActionResult> Delete(int? id)
+{
+    if (id == null)
+    {
+        return NotFound();
+    }
+
+    var order = await _context.Orders
+        .Include(o => o.Items)
+        .FirstOrDefaultAsync(m => m.Id == id);
+
+    if (order == null)
+    {
+        return NotFound();
+    }
+
+    return View(order);
+}
+
+// POST: Order/Delete/5
+[HttpPost, ActionName("Delete")]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> DeleteConfirmed(int id)
+{
+    var order = await _context.Orders.FindAsync(id);
+    if (order == null)
+    {
+        return NotFound();
+    }
+
+    _context.Orders.Remove(order);
+    await _context.SaveChangesAsync();
+    return RedirectToAction(nameof(MyOrders));
+}
 
 
         
