@@ -136,7 +136,11 @@ app.MapControllerRoute(
     defaults: new { controller = "Order", action = "Review" }
 );
 
-
+app.MapControllerRoute(
+    name: "all-reviews",
+    pattern: "Review/AllReviews",
+    defaults: new { controller = "Order", action = "AllReviews" }
+);
 
 
 // Start the application

@@ -240,5 +240,19 @@ public async Task<IActionResult> SubmitReview(Review model)
     // If the model state is not valid, return the Review view with validation errors
     return View("Review", model);
 }
+
+
+        public async Task<IActionResult> AllReviews()
+        {
+            var reviews = await _context.Reviews.ToListAsync();
+
+            var viewModel = new ReviewListViewModel // Assuming ReviewListViewModel is a model to hold a list of reviews
+            {
+                Reviews = reviews
+            };
+
+            return View(viewModel); // Assuming your view is strongly typed to ReviewListViewModel
+        }
+
     }
 }
