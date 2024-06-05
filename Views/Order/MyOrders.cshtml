@@ -60,6 +60,17 @@
                                     @foreach (var item in order.Items)
                                     {
                                         <tr>
+                                            <td>
+    @if (order.Status == ebookings.Models.OrderStatus.Delivered)
+    {
+        <a href="/Order/Review?id=@order.Id" class="btn btn-primary btn-sm">Review</a>
+    }
+    else
+    {
+        <span>N/A</span>
+    }
+</td>
+
                                             <td>@item.Book.Title</td>
                                             <td>@item.Book.Author</td>
                                             <td>@item.Price.ToString("C")</td>
