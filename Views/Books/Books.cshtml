@@ -6,14 +6,12 @@
 <br/>
 <h4>Welcome to ebookings shop!</h4><hr/>
 
-<form asp-controller="Books" asp-action="AllBooks" method="get">
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by Title" name="searchString">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
+    <form asp-controller="Books" asp-action="Search" method="get" class="mb-3">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search by Title" id="searchInput">
+            <button class="btn btn-outline-secondary" type="button" onclick="searchBooks()">Search</button>
         </div>
-    </div>
-</form>
+    </form>
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var book in Model)
@@ -65,6 +63,23 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function searchBooks() {
+            var input, filter, cards, card, title, i;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            cards = document.querySelectorAll(".book-card");
+            for (i = 0; i < cards.length; i++) {
+                card = cards[i];
+                title = card.getAttribute("data-title").toUpperCase();
+                if (title.includes(filter)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            }
+        }
+    </script>
     <script>
         $(document).ready(function () {
             $('.view-details-btn').click(function () {

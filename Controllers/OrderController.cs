@@ -178,31 +178,10 @@ public IActionResult Review()
     return View();
 }
 
-// GET: Order/Delete/5
-[HttpGet]
-public async Task<IActionResult> Delete(int? id)
-{
-    if (id == null)
-    {
-        return NotFound();
-    }
-
-    var order = await _context.Orders
-        .Include(o => o.Items)
-        .FirstOrDefaultAsync(m => m.Id == id);
-
-    if (order == null)
-    {
-        return NotFound();
-    }
-
-    return View(order);
-}
-
 // POST: Order/Delete/5
-[HttpPost, ActionName("Delete")]
+[HttpPost]
 [ValidateAntiForgeryToken]
-public async Task<IActionResult> DeleteConfirmed(int id)
+public async Task<IActionResult> Delete(int id)
 {
     var order = await _context.Orders.FindAsync(id);
     if (order == null)
@@ -214,6 +193,7 @@ public async Task<IActionResult> DeleteConfirmed(int id)
     await _context.SaveChangesAsync();
     return RedirectToAction(nameof(MyOrders));
 }
+
 
 
 [HttpPost]

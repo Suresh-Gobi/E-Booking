@@ -26,5 +26,18 @@ namespace ebookings.Controllers
     return View("~/Views/Admin/GenerateReport.cshtml");  // Update the view path
 }
 
+public async Task<IActionResult> DownloadPdfReport()
+{
+    // Generate PDF content using pdf-lib or any other library
+    var pdfBytes = await GeneratePdfReportAsync();
+
+    // Return the PDF file as a download
+    return File(pdfBytes, "application/pdf", "report.pdf");
+}
+
+        private async Task<byte[]> GeneratePdfReportAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

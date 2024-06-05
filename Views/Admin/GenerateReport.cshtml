@@ -55,13 +55,85 @@
     </div>
 </div>
 
+<div class="mt-5">
+    <h4>Profitable Order Details</h4>
+    <hr />
+    @if (ViewBag.OrderDetails != null && ViewBag.OrderDetails.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in ViewBag.OrderDetails)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+                            <td>@order.CustomerName</td>
+                            <td>$@order.TotalPrice</td>
+                            <td>@order.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>No order details available.</p>
+    }
+</div>
+
+
+
 <div class="mt-3">
     <button class="btn btn-primary" id="downloadBtn">Download Report PDF</button>
 </div>
 
 @section Scripts {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+       <script>
+        document.getElementById('downloadBtn').addEventListener('click', function () {
+            // Capture the screenshot of the report
+            html2canvas(document.body, {
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: document.body.scrollWidth,
+                windowHeight: document.body.scrollHeight,
+                x: 0,
+                y: 0,
+                width: document.body.clientWidth,
+                height: document.body.clientHeight,
+                useCORS: true, // Enable CORS for cross-origin images
+                allowTaint: true, // Allow taint on the canvas
+                logging: true, // Enable logging for debugging
+                scale: window.devicePixelRatio, // Use device pixel ratio for high-resolution image
+            }).then(function (canvas) {
+                // Convert the canvas to a data URL
+                var imageData = canvas.toDataURL('image/png');
+
+                // Create a download link and trigger the download
+                var a = document.createElement('a');
+                a.href = imageData;
+                a.download = 'report.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        });
+    </script>
+
     <script>
         var ctxTotal = document.getElementById('totalChart').getContext('2d');
         var totalChart = new Chart(ctxTotal, {
@@ -114,12 +186,6 @@
                 }
             }
         });
+ </script>
 
-        document.getElementById('downloadBtn').addEventListener('click', function () {
-            var doc = new jsPDF();
-            doc.text("Generate Report", 10, 10);
-            // Add more content to the PDF as needed
-            doc.save("report.pdf");
-        });
-    </script>
 }
