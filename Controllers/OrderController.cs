@@ -216,8 +216,29 @@ public async Task<IActionResult> DeleteConfirmed(int id)
 }
 
 
-        
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> SubmitReview(Review model)
+{
+    if (ModelState.IsValid)
+    {
+        // Create a new Review instance with the submitted data
+        var review = new Review
+        {
+            Rating = model.Rating,
+            ReviewText = model.ReviewText
+        };
 
+        // Add the review to the context and save changes
+        _context.Reviews.Add(review);
+        await _context.SaveChangesAsync();
 
+        // Redirect to the MyOrders action after successful review submission
+        return RedirectToAction(nameof(MyOrders));
+    }
+
+    // If the model state is not valid, return the Review view with validation errors
+    return View("Review", model);
+}
     }
 }

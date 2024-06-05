@@ -7,27 +7,26 @@
 
 <form asp-action="SubmitReview" method="post" class="row g-3">
     <div class="col-md-6">
-        <label asp-for="Review" class="form-label">Review:</label>
-        <textarea asp-for="Review" class="form-control" rows="5"></textarea>
-        <span asp-validation-for="Review" class="text-danger"></span>
+        <label asp-for="ReviewText" class="form-label">Review:</label>
+        <textarea asp-for="ReviewText" class="form-control" rows="5" required></textarea>
+        <span asp-validation-for="ReviewText" class="text-danger"></span>
     </div>
     <div class="col-md-6">
         <label class="form-label">Rate:</label>
         <div class="rating">
-            <input type="radio" id="star5" name="Rate" value="5" />
+            <input type="radio" id="star5" name="Rating" value="5" />
             <label for="star5" title="5 stars">5 stars</label>
-            <input type="radio" id="star4" name="Rate" value="4" />
+            <input type="radio" id="star4" name="Rating" value="4" />
             <label for="star4" title="4 stars">4 stars</label>
-            <input type="radio" id="star3" name="Rate" value="3" />
+            <input type="radio" id="star3" name="Rating" value="3" />
             <label for="star3" title="3 stars">3 stars</label>
-            <input type="radio" id="star2" name="Rate" value="2" />
+            <input type="radio" id="star2" name="Rating" value="2" />
             <label for="star2" title="2 stars">2 stars</label>
-            <input type="radio" id="star1" name="Rate" value="1" />
+            <input type="radio" id="star1" name="Rating" value="1" />
             <label for="star1" title="1 star">1 star</label>
         </div>
         <span class="text-danger">* Required</span>
     </div>
-    <input type="hidden" asp-for="CartItemId" />
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Submit Review</button>
     </div>

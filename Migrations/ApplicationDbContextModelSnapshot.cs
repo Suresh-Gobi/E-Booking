@@ -400,6 +400,26 @@ namespace ebookings.Migrations
                     b.ToTable("OrderDetails");
                 });
 
+            modelBuilder.Entity("ebookings.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReviewText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("ebookings.Models.UserSignupModel", b =>
                 {
                     b.Property<int>("Id")
