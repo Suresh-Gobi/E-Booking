@@ -48,7 +48,7 @@ namespace ebookings.Controllers
             return View(model);
         }
 
-        [HttpGet]
+             [HttpGet]
         public IActionResult AdminLogin()
         {
             return View();
@@ -63,7 +63,7 @@ namespace ebookings.Controllers
                 if (result.Succeeded)
                 {
                     // Redirect to admin dashboard or specific admin area
-                    return RedirectToAction("AdminDashboard", "Admin");
+                    return RedirectToAction("AdminDashboard", "Adminboard");
                 }
                 else
                 {
