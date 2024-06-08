@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ebookings.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240605181210_RenameReviewId")]
-    partial class RenameReviewId
+    [Migration("20240608055328_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -414,16 +414,11 @@ namespace ebookings.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReviewId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("ReviewText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ReviewId");
-
-                    b.HasIndex("ReviewId1");
 
                     b.ToTable("Reviews");
                 });
@@ -549,21 +544,9 @@ namespace ebookings.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("ebookings.Models.Review", b =>
-                {
-                    b.HasOne("ebookings.Models.Review", null)
-                        .WithMany("Reviews")
-                        .HasForeignKey("ReviewId1");
-                });
-
             modelBuilder.Entity("ebookings.Models.Order", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("ebookings.Models.Review", b =>
-                {
-                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

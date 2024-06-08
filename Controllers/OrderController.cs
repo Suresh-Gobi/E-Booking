@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ebookings.Controllers
 {
-    [Authorize]
+    // [Authorize]
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -37,7 +37,10 @@ public async Task<IActionResult> CompleteOrder(OrderViewModel model)
     if (ModelState.IsValid)
     {
         var userId = _userManager.GetUserId(User);
-        var cartItems = await _context.CartItems.Include(c => c.Book).Where(c => c.UserId == userId).ToListAsync();
+        var cartItems = await _context.CartItems
+            .Include(c => c.Book)
+            .Where(c => c.UserId == userId)
+            .ToListAsync();
 
         if (!cartItems.Any())
         {
@@ -53,24 +56,27 @@ public async Task<IActionResult> CompleteOrder(OrderViewModel model)
             Email = model.Email,
             PhoneNumber = model.PhoneNumber,
             UserId = userId,
-            Items = cartItems,
-            Status = OrderStatus.PendingDelivery
+            Items = new List<CartItem>(), // Initialize the Items list
+            Status = OrderStatus.Delivered
         };
 
-        // Set Review to empty string if null
         foreach (var item in cartItems)
         {
-            if (item.Review == null)
+            order.Items.Add(new CartItem
             {
-                item.Review = string.Empty;
-            }
+                BookId = item.BookId,
+                Quantity = item.Quantity,
+                Price = item.Price,
+                UserId = userId, // Set the UserId for each CartItem
+                Review = item.Review // Optional, if you want to include review from cart items
+            });
         }
 
         _context.Orders.Add(order);
-        await _context.SaveChangesAsync();
 
         // Clear the cart after successful order
         _context.CartItems.RemoveRange(cartItems);
+
         await _context.SaveChangesAsync();
 
         return RedirectToAction("OrderConfirmation");
@@ -78,6 +84,7 @@ public async Task<IActionResult> CompleteOrder(OrderViewModel model)
 
     return View("Checkout", model);
 }
+
 
 
         // GET: Order/OrderConfirmation

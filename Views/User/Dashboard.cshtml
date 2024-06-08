@@ -4,9 +4,6 @@
     ViewData["Title"] = "User Dashboard";
 }
 <br/>
-<br/>
-<h4>Welcome to Your Dashboard, @Model.Username!</h4>
-<hr/>
 
 <div class="d-flex justify-content-between">
     <!-- Search Bar -->
@@ -16,28 +13,19 @@
             <button class="btn btn-outline-secondary" type="button" onclick="searchBooks()">Search</button>
         </div>
     </form>
-
+</div>
+<br/>
+<div class="row">
     <!-- My Cart and My Orders buttons -->
     <div class="text-end">
         <a href="/Cart" class="btn btn-primary me-2 mt-2">My Cart</a>
         <a href="/Order/MyOrders" class="btn btn-secondary mt-2">My Orders</a>
         <a href="/Review/AllReviews" class="btn btn-secondary mt-2">My Reviews</a>
-        <a href="#" class="btn btn-danger mt-2">Logout</a>
-    </div>
-</div>
-<br/>
-<div class="row">
-    <div class="col-md-6">
-
-        <p><strong>Username:</strong> @Model.Username</p>
-        <p><strong>Email:</strong> @Model.Email</p>
-
     </div>
 </div>
 <br/>
 <br/>
-<h4>Latest Books</h4>
-<hr/>
+<h4>Books</h4>
 <br/>
 <div class="row" id="bookList">
     @foreach (var book in Model.Books)

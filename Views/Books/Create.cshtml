@@ -4,65 +4,55 @@
     ViewData["Title"] = "Create Book";
 }
 
-<h1>Create Book</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Create Book</h1>
 
-<h4>Book</h4>
-<hr />
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create" method="post">
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Publisher" class="control-label"></label>
-                <input asp-for="Publisher" class="form-control" />
-                <span asp-validation-for="Publisher" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PublicationDate" class="control-label"></label>
-                <input asp-for="PublicationDate" class="form-control" type="date" />
-                <span asp-validation-for="PublicationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ISBN" class="control-label"></label>
-                <input asp-for="ISBN" class="form-control" />
-                <span asp-validation-for="ISBN" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Edition" class="control-label"></label>
-                <input asp-for="Edition" class="form-control" />
-                <span asp-validation-for="Edition" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Availability" class="control-label">Availability</label>
-                <select asp-for="Availability" class="form-control">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
-                <span asp-validation-for="Availability" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerReviews" class="control-label"></label>
-                <textarea asp-for="CustomerReviews" class="form-control"></textarea>
-                <span asp-validation-for="CustomerReviews" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            
+            <form asp-action="Create" method="post">
+                <div class="form-group">
+                    <label for="Title">Title</label>
+                    <input asp-for="Title" id="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Author">Author</label>
+                    <input asp-for="Author" id="Author" class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Publisher">Publisher</label>
+                    <input asp-for="Publisher" id="Publisher" class="form-control" />
+                    <span asp-validation-for="Publisher" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="PublicationDate">Publication Date</label>
+                    <input asp-for="PublicationDate" id="PublicationDate" class="form-control" type="date" />
+                    <span asp-validation-for="PublicationDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="ISBN">ISBN</label>
+                    <input asp-for="ISBN" id="ISBN" class="form-control" />
+                    <span asp-validation-for="ISBN" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Edition">Edition</label>
+                    <input asp-for="Edition" id="Edition" class="form-control" />
+                    <span asp-validation-for="Edition" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Price">Price</label>
+                    <input asp-for="Price" id="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="Availability" value="true" />
+                <input type="hidden" asp-for="CustomerReviews" value="default" />
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

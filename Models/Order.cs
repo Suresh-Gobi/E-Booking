@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ebookings.Models
 {
-    public class Order
+     public class Order
     {
         public int Id { get; set; }
         public string FullName { get; set; }

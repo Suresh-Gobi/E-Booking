@@ -2,66 +2,107 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<div class="container mt-5">
-    <h1>Welcome to Admin Dashboard</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            padding-top: 20px;
+        }
 
-    <div class="row mt-4">
-        <!-- Manage Books Card -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Manage Books</h5>
-                    <p class="card-text">Manage books, add new books, and edit existing books.</p>
-                    <a href="/Books/Create" class="btn btn-primary">Add Book</a>
-                    <a href="/Books/Get" class="btn btn-secondary">Manage Books</a>
-                </div>
-            </div>
-        </div>
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+        }
 
-        <!-- Payment Card -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Payment</h5>
-                    <p class="card-text">View and manage payment transactions.</p>
-                    <a href="#" class="btn btn-primary">View Payments</a>
-                </div>
-            </div>
-        </div>
+        .sidebar a:hover {
+            background-color: #575d63;
+        }
 
-        <!-- Manage Orders Card -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Manage Orders</h5>
-                    <p class="card-text">View and manage customer orders.</p>
-                    <a href="/Order/AllDetails" class="btn btn-primary">View Orders</a>
-                </div>
+        .main-content {
+            margin-left: 260px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2 class="text-center text-white">Admin Dashboard</h2>
+    <a href="#manage-books" onclick="showSection('manage-books')">Manage Books</a>
+    <a href="#manage-orders" onclick="showSection('manage-orders')">Manage Orders</a>
+    <a href="#manage-users" onclick="showSection('manage-users')">Manage User Accounts</a>
+    <a href="#generate-report" onclick="showSection('generate-report')">Generate Report</a>
+</div>
+
+<div class="main-content">
+    <div id="manage-books" class="content-section">
+        <h1>Manage Books</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Manage Books</h5>
+                <p class="card-text">Manage books, add new books, and edit existing books.</p>
+                <a href="/Books/Create" class="btn btn-primary">Add Book</a>
+                <a href="/Books/Get" class="btn btn-secondary">Manage Books</a>
             </div>
         </div>
     </div>
 
-    <div class="row mt-4">
-        <!-- Manage User Accounts Card -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Manage User Accounts</h5>
-                    <p class="card-text">Manage user accounts and permissions.</p>
-                    <a href="/User/All" class="btn btn-primary">View Users</a>
-                </div>
+    <div id="manage-orders" class="content-section" style="display: none;">
+        <h1>Manage Orders</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Manage Orders</h5>
+                <p class="card-text">View and manage customer orders.</p>
+                <a href="/Order/AllDetails" class="btn btn-primary">View Orders</a>
             </div>
         </div>
+    </div>
 
-        <!-- Generate Report Card -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Generate Report</h5>
-                    <p class="card-text">Generate and view sales reports.</p>
-                    <a href="/Report/GenerateReport" class="btn btn-primary">Generate Report</a>
-                </div>
+    <div id="manage-users" class="content-section" style="display: none;">
+        <h1>Manage User Accounts</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Manage User Accounts</h5>
+                <p class="card-text">Manage user accounts and permissions.</p>
+                <a href="/User/All" class="btn btn-primary">View Users</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="generate-report" class="content-section" style="display: none;">
+        <h1>Generate Report</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Generate Report</h5>
+                <a href="/Report/GenerateReport" class="btn btn-primary">Report</a>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function showSection(sectionId) {
+        var sections = document.getElementsByClassName('content-section');
+        for (var i = 0; i < sections.length; i++) {
+            sections[i].style.display = 'none';
+        }
+        document.getElementById(sectionId).style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
